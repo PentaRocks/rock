@@ -9,7 +9,8 @@ before_install:
 - sudo apt-get install dmd-bin
 deploy: 
   provider: openshift
-  app: drock-lenush
+  app: drock
+  domain: lenush
   user: galtiberiu@gmail.com
   password: GB219165
   
