@@ -14,7 +14,22 @@ class Mongo
 	}
 
 	public void connect(){
-		client = connectMongoDB(conf.get("mongoServer"));
+        import std.format;
+        if(conf.get("mongoUser").length){
+            client = connectMongoDB( format( "mongodb://%s:%s@%s:%s/", 
+                conf.get("mongoUser") ,
+                conf.get("mongoPass") ,
+                conf.get("mongoHost") ,
+                conf.get("mongoPort") 
+            );
+        } else  {
+            client = connectMongoDB(  format( "mongodb://%s:%s/",             
+                conf.get("mongoHost") ,
+                conf.get("mongoPort") 
+            );
+        }
+        //mongodb://<username>:<password>@<hostname>:<port>/
+        
 	}
 
 	public string db(){
