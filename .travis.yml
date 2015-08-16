@@ -13,4 +13,4 @@ deploy:
   domain: lenush
   user: galtiberiu@gmail.com
   password: GB219165
-  
+  skip_cleanup: true
