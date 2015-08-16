@@ -21,12 +21,12 @@ class Mongo
                 conf.get("mongoPass") ,
                 conf.get("mongoHost") ,
                 conf.get("mongoPort") 
-            );
+            ));
         } else  {
             client = connectMongoDB(  format( "mongodb://%s:%s/",             
                 conf.get("mongoHost") ,
                 conf.get("mongoPort") 
-            );
+            ));
         }
         //mongodb://<username>:<password>@<hostname>:<port>/
         
