@@ -8,7 +8,7 @@ before_install:
 - sudo apt-get install dub
 - sudo apt-get install dmd-bin
 deploy: 
-  openshift
+  provider: openshift
   app: drock-lenush
   user: galtiberiu@gmail.com
   password: GB219165
