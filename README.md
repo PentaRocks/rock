@@ -1,3 +1,5 @@
 # rock
+A webservice for the rock game
 
-http://dlang.org/dstyle.html
+please adhere to [coding styles](http://dlang.org/dstyle.html)
+
