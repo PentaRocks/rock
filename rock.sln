@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{98302967-76D6-47A3-A829-9D42D19C72F3}") = "rock", "rock.visualdproj", "{C9FBEC88-FE26-4C65-9634-C852483BFA92}"
+	ProjectSection(ProjectDependencies) = postProject
+		{761ADB31-5FC2-4ABA-BDEF-098FE67003A5} = {761ADB31-5FC2-4ABA-BDEF-098FE67003A5}
+	EndProjectSection
+EndProject
+Project("{98302967-76D6-47A3-A829-9D42D19C72F3}") = "vibe-d", "vibe-d.visualdproj", "{761ADB31-5FC2-4ABA-BDEF-098FE67003A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug|Win32 = debug|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9FBEC88-FE26-4C65-9634-C852483BFA92}.debug|Win32.ActiveCfg = debug|Win32
+		{C9FBEC88-FE26-4C65-9634-C852483BFA92}.debug|Win32.Build.0 = debug|Win32
+		{761ADB31-5FC2-4ABA-BDEF-098FE67003A5}.debug|Win32.ActiveCfg = debug|Win32
+		{761ADB31-5FC2-4ABA-BDEF-098FE67003A5}.debug|Win32.Build.0 = debug|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

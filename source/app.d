@@ -14,23 +14,24 @@ shared static this()
 
 
 	auto settings = new HTTPServerSettings;
-	settings.bindAddresses = ["::1", conf.get("selfIp")];
+	settings.bindAddresses = [ conf.get("selfIp") ];
 	settings.port =  conf.get("port").to!ushort;
 
 	auto router = new URLRouter;
 
 	// DB
-	auto db = new Mongo(conf);
-	db.connect();
+	auto mongoDb= new Mongo(conf);
+	mongoDb.connect();
 
+	//just playing around , this should be removed
+	router.get("/mongo", &mongoT);
 
 	// USER
-	auto userD = new UserDAO(db);
+	auto userD = new UserDAO(mongoDb);
 	auto reg = new Registration(userD);
-	auto userCtrl = new UserController(router, conf, reg);
+	auto userCtrl = new UserController(router, conf, reg, userD);
 	userCtrl.registerRoutes();
 
-	router.get("/mongo", &mongoT);
 	
 	listenHTTP(settings, router);
 }

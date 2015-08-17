@@ -13,7 +13,7 @@ class Config
 		"mongoHost":"127.0.0.1",
         "mongoPort":"27017",
         "mongoUser": "",
-        "mongoPass": ""
+        "mongoPass": "",
 		"mongoDB":"drock"
 	];
 
@@ -63,22 +63,46 @@ class Config
 	
 	}
 
-	public string get(string key) 
+	/**
+	 * read config key
+	 * returns empty string if key is not set
+	 * 
+	 */
+	public string get(string key, string defaultValue = "") 
 	{
 		if (key !in data)
-            return "";
+            return defaultValue;
         
 		return data[key];
 	}
 
+	/**
+	 * set configuration values
+	 */ 
 	public void set(string key, string val)
 	{
 		data[key] = val;
 	}
 
-    
+    /**
+     * allows accesing configurations as array
+     * 
+     */ 
     string opIndex(string key){
         return get(key);
     }
+
+	/**
+	*  allows setting configuration keys as array
+	*/
+	void opIndex(string key, string val) {
+		data[key] = val;
+	}
+
+}
+
+unittest{
+	auto cnf = Config.getInstance();
+	assert(cnf["port"] == "8080");
 }
 

@@ -21,19 +21,32 @@ class Mongo
                 conf.get("mongoPass") ,
                 conf.get("mongoHost") ,
                 conf.get("mongoPort") 
-            );
+            ));
         } else  {
             client = connectMongoDB(  format( "mongodb://%s:%s/",             
                 conf.get("mongoHost") ,
                 conf.get("mongoPort") 
-            );
+            ));
         }
         //mongodb://<username>:<password>@<hostname>:<port>/
         
 	}
 
-	public string db(){
-		return conf["mongoDB"];
+	public MongoDatabase getDatabase( string dbName = "")
+	{
+		if(dbName == ""){
+			dbName = conf["mongoDB"];
+		}
+		return client.getDatabase( dbName );
+	}
+
+	public MongoCollection getCollection ( string colName ) 
+	{
+		if (colName.indexOf('.') == -1)
+		{
+			colName = conf["mongoDB"] ~ "." ~ colName;
+		}
+		return client.getCollection(colName);
 	}
 }
 
