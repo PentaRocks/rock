@@ -9,5 +9,8 @@
 	"dependencies": {
 		"vibe-d": "~>0.7.23"
 	},
+    "subConfigurations": {
+        "vibe-d": "libasync"
+    },
 	"versions": ["VibeDefaultMain"]
 }
