@@ -25,7 +25,7 @@ class Config
 		"OPENSHIFT_MONGODB_DB_USERNAME": "mongoUser",
 		"OPENSHIFT_MONGODB_DB_PASSWORD": "mongoPass"
 	];
-	/*
+	
 
 	static Config _instance;
 	public static getInstance() 
