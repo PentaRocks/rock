@@ -12,7 +12,34 @@ import modules.user.userDao,
 
 import std.encoding;
 
-class UserController : AbstractController
+
+/**
+*
+*/
+interface UserAPI 
+{
+
+	Json getUser(string email);
+
+	@before!parseQuerystring("query")
+	Json getUsers(Json query);
+	void postUser(User user);
+	void putUser(User user);
+	void patchUser(string userId, Json userFields);
+	//void updateUser(string id );	
+}
+
+
+Json parseQuerystring(HTTPServerRequest req, HTTPServerResponse res)
+{
+	Json queryJson = Json.emptyObject;
+	foreach(key, value; req.query){
+		queryJson[ key ] = value;
+	}
+	return queryJson;
+}
+
+class UserController : AbstractController  , UserAPI
 {
 	Registration registrationService;
 	UserDAO dao;
@@ -24,41 +51,66 @@ class UserController : AbstractController
 		registrationService = reg;
 	}
 
+	
 	public override void registerRoutes(){
-        
-		router.get("/user/*", &getUser);
-		router.get("/users", &getUsers);
-		router.post("/user/", &registerUser);
+        registerRestInterface(router, this);
+
+		// replaced by restInterfaceGenerator
+		//router.get("/user/*", &getUser);  
+		//router.get("/users", &getUsers);
+		//router.post("/user/", &registerUser);
 		router.get("/users/populate/:count", &populate);
         router.any("*", &emptyRespose);
 	}
 
-	void getUser(HTTPServerRequest req, HTTPServerResponse res)
+	
+	
+	override Json getUser(string userId)
 	{
-		prepareResponse(res);
-		User user = dao.getUser();		
-		res.writeBody( user.serializeToJsonString , "application/json");
+		Json query = Json.emptyObject;
+		query["email"] = userId;
+		return dao.getUser( query ).serializeToJson;	
 	}
 
-	void getUsers(HTTPServerRequest req, HTTPServerResponse res)
+	// old function
+	//void getUser(HTTPServerRequest req, HTTPServerResponse res)
+	//{
+	//    prepareResponse(res);
+	//    
+	//    User user = dao.getUser();		
+	//    
+	//    res.writeBody( user.serializeToJsonString , "application/json");
+	//}
+
+	override Json getUsers(Json query)
 	{
-		prepareResponse(res);
-		User[] users = dao.getUsers();		
-		res.writeBody( users.serializeToJsonString , "application/json");
+		return dao.getUsers( query ).serializeToJson;		
 	}
 
+	void postUser(User user){
+		dao.insert(user);
+	}
+
+	void putUser(User user){
+		dao.save(user);
+	}
+
+	void patchUser(string userId, Json userFields)
+	{
+		dao.save( BsonObjectID.fromString(userId), userFields);
+	}
 	void populate(HTTPServerRequest req, HTTPServerResponse res)
 	{
 		int count = req.params["count"].to!int;
 		dao.populateDb(count);
-		res.redirect("/users");
 
 	}
 	
-	void registerUser(HTTPServerRequest req,
-		HTTPServerResponse res){
+	void registerUser(HTTPServerRequest req, HTTPServerResponse res)
+	{
 
 		try{
+			
 			registrationService.register(req.json);
 
 			prepareResponse(res);

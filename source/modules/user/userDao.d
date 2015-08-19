@@ -19,15 +19,42 @@ class UserDAO
 	}
 
 	void insert(Json user){
+		User dbUser = user.deserializeJson!User	;
+		collection.insert(dbUser);
+	}
+
+	void insert(User user){
 		collection.insert(user);
 	}
 
+	void save(User user){
+		collection.update(["_id": user.id ], user);
+	}
+
+
+	void save(BsonObjectID id, Json userFields){
+
+		auto userData = collection.findOne(["_id": id ]);
+		if(userData == Bson.emptyObject ) return;
+		User user = userData.deserializeBson!User;
+		user.update(userFields);
+		save(user);
+		
+	}
+
 	User getUser(Json userQuery= Json.emptyObject) {
+
 		auto data = collection.findOne( userQuery );		
 		User user = data.deserializeBson!User;
 		return user;
 	}
-	User[] getUsers(Json userQuery= Json.emptyObject) {
+
+
+
+
+
+	User[] getUsers(Json userQuery= Json.emptyObject) 
+	{
 		auto cursor = collection.find( userQuery );		
 		User[] users;
 		foreach( data; cursor){
@@ -37,6 +64,9 @@ class UserDAO
 		return users;
 	}
 
+	/**
+	* cannot read the file in openshift, remove this
+	*/
 	void populateDb(int count){
 		import std.file;
 		import std.array;
