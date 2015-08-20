@@ -30,15 +30,6 @@ interface UserAPI
 }
 
 
-Json parseQuerystring(HTTPServerRequest req, HTTPServerResponse res)
-{
-	Json queryJson = Json.emptyObject;
-	foreach(key, value; req.query){
-		queryJson[ key ] = value;
-	}
-	return queryJson;
-}
-
 class UserController : AbstractController  , UserAPI
 {
 	Registration registrationService;

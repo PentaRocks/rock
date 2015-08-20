@@ -3,6 +3,15 @@
 import vibe.d;
 import config;
 
+Json parseQuerystring(HTTPServerRequest req, HTTPServerResponse res)
+{
+	Json queryJson = Json.emptyObject;
+	foreach(key, value; req.query){
+		queryJson[ key ] = value;
+	}
+	return queryJson;
+}
+
 abstract class AbstractController
 {
 	protected Config conf;
@@ -14,7 +23,7 @@ abstract class AbstractController
 		router = Prouter;
 	}
 
-	public abstract void registerRoutes();
+	public void registerRoutes() {};
 	
 	void emptyRespose(HTTPServerRequest req,
 		HTTPServerResponse res){

@@ -108,9 +108,15 @@
   </Folder>
   <Folder name="rock">
    <Folder name="source">
+    <Folder name="utils" />
     <Folder name="modules">
      <Folder name="db">
       <File path="source\modules\db\mongo.d" />
+     </Folder>
+     <Folder name="game">
+      <File path="source\modules\game\controller.d" />
+      <File path="source\modules\game\dao.d" />
+      <File path="source\modules\game\game.d" />
      </Folder>
      <Folder name="user">
       <File path="source\modules\user\registration.d" />
@@ -119,6 +125,7 @@
       <File path="source\modules\user\userDao.d" />
      </Folder>
      <File path="source\modules\abstractController.d" />
+     <File path="source\utils\routing.d" />
     </Folder>
     <File path="source\app.d" />
     <File path="source\config.d" />

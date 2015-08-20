@@ -5,6 +5,8 @@ import mongotest;
 import modules.user.userController;
 import modules.user.userDao;
 import modules.user.registration;
+import modules.game.dao,
+	modules.game.controller;
 import modules.db;
 import config;
 
@@ -29,6 +31,8 @@ shared static this()
 	// USER
 	auto userD = new UserDAO(mongoDb);
 	auto reg = new Registration(userD);
+	auto gameCtrl = new GameController(router, conf, new GameDAO(mongoDb));
+	router.registerRestInterface(gameCtrl);
 	auto userCtrl = new UserController(router, conf, reg, userD);
 	userCtrl.registerRoutes();
 
